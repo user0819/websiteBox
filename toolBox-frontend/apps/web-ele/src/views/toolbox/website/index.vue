@@ -1,9 +1,16 @@
 <script lang="ts" setup>
-import type { CategoryInfo, WebsiteInfo } from '#/api';
+import type {CategoryInfo, WebsiteInfo} from '#/api';
+import {
+  addWebsiteApi,
+  deleteWebsiteApi,
+  getCategoryApi,
+  getWebsiteApi,
+  updateWebsiteApi,
+} from '#/api';
 
-import { onMounted, reactive, ref } from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 
-import { Page } from '@vben/common-ui';
+import {Page} from '@vben/common-ui';
 
 import {
   ElButton,
@@ -16,19 +23,13 @@ import {
   ElMessage,
   ElMessageBox,
   ElOption,
+  ElPagination,
   ElSelect,
   ElTable,
 } from 'element-plus';
 
-import {
-  addWebsiteApi,
-  deleteWebsiteApi,
-  getCategoryApi,
-  getWebsiteApi,
-  updateWebsiteApi,
-} from '#/api';
-
 const tableData = ref<WebsiteInfo[]>([]);
+const total = ref(0);
 const categoryData = ref<CategoryInfo[]>([]);
 const dialogVisible = ref(false);
 const isEdit = ref(false);
@@ -43,9 +44,8 @@ const currentItem = reactive<WebsiteInfo>({
 
 const fetchWebsite = async () => {
   const res = await getWebsiteApi(query);
-  if (Array.isArray(res)) {
-    tableData.value = res;
-  }
+  tableData.value = res.list;
+  total.value = res.total;
 };
 
 const fetchCategory = async () => {
@@ -95,7 +95,8 @@ const deleteItem = (id?: number) => {
       ElMessage.success('删除成功');
       await fetchWebsite();
     })
-    .catch(() => {});
+    .catch(() => {
+    });
 };
 
 const getCategoryName = (categoryId?: number): string => {
@@ -107,6 +108,8 @@ const query = reactive({
   categoryId: undefined as number | undefined,
   name: '',
   url: '',
+  pageNum: 1,
+  pageSize: 10,
 });
 
 const handleSearch = async () => {
@@ -122,6 +125,17 @@ const resetSearch = () => {
   query.url = '';
   fetchWebsite(); // 重新加载全部数据
 };
+
+const handleSizeChange = async (newSize: number) => {
+  query.pageSize = newSize;
+  await fetchWebsite();
+};
+
+const handleCurrentChange = async (newPage: number) => {
+  query.pageNum = newPage;
+  await fetchWebsite();
+};
+
 
 onMounted(fetchWebsite);
 onMounted(fetchCategory);
@@ -183,37 +197,56 @@ onMounted(fetchCategory);
         </div>
       </template>
 
-      <ElTable :data="tableData" stripe border highlight-current-row>
-        <ElTable.TableColumn type="index" width="50" />
-        <ElTable.TableColumn label="目录" prop="categoryId">
-          <template #default="scope">
-            {{ getCategoryName(scope.row.categoryId) }}
-          </template>
-        </ElTable.TableColumn>
-        <ElTable.TableColumn label="名称" prop="name" />
-        <ElTable.TableColumn label="链接" prop="url" />
-        <ElTable.TableColumn label="描述" prop="description" />
-        <ElTable.TableColumn label="序号" prop="sort" />
-        <ElTable.TableColumn fixed="right" width="250" label="操作">
-          <template #default="scope">
-            <ElButton
-              type="primary"
-              size="small"
-              @click="openDialog(scope.row)"
-            >
-              编辑
-            </ElButton>
-            <ElButton
-              type="danger"
-              size="small"
-              @click="deleteItem(scope.row.id)"
-            >
-              删除
-            </ElButton>
-          </template>
-        </ElTable.TableColumn>
-      </ElTable>
+      <template #default>
+        <ElTable :data="tableData" stripe border highlight-current-row>
+          <ElTable.TableColumn type="index" width="50"/>
+          <ElTable.TableColumn label="目录" prop="categoryId">
+            <template #default="scope">
+              {{ getCategoryName(scope.row.categoryId) }}
+            </template>
+          </ElTable.TableColumn>
+          <ElTable.TableColumn label="名称" prop="name"/>
+          <ElTable.TableColumn label="链接" prop="url"/>
+          <ElTable.TableColumn label="描述" prop="description"/>
+          <ElTable.TableColumn label="序号" prop="sort"/>
+          <ElTable.TableColumn fixed="right" width="250" label="操作">
+            <template #default="scope">
+              <ElButton
+                type="primary"
+                size="small"
+                @click="openDialog(scope.row)"
+              >
+                编辑
+              </ElButton>
+              <ElButton
+                type="danger"
+                size="small"
+                @click="deleteItem(scope.row.id)"
+              >
+                删除
+              </ElButton>
+            </template>
+          </ElTable.TableColumn>
+        </ElTable>
+      </template>
+
+
+      <template #footer>
+        <div class="pagination-container">
+          <ElPagination
+            v-model:current-page="query.pageNum"
+            v-model:page-size="query.pageSize"
+            :total="total"
+            :page-sizes="[10, 20, 50, 100]"
+            layout="prev, pager, next, sizes, total, jumper"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
+          />
+
+        </div>
+      </template>
     </ElCard>
+
 
     <!-- 弹窗表单 -->
     <ElDialog
@@ -233,16 +266,16 @@ onMounted(fetchCategory);
           </ElSelect>
         </ElFormItem>
         <ElFormItem label="名称">
-          <ElInput v-model="currentItem.name" />
+          <ElInput v-model="currentItem.name"/>
         </ElFormItem>
         <ElFormItem label="链接">
-          <ElInput v-model="currentItem.url" />
+          <ElInput v-model="currentItem.url"/>
         </ElFormItem>
         <ElFormItem label="描述">
-          <ElInput v-model="currentItem.description" />
+          <ElInput v-model="currentItem.description"/>
         </ElFormItem>
         <ElFormItem label="序号">
-          <ElInputNumber v-model="currentItem.sort" :min="0" />
+          <ElInputNumber v-model="currentItem.sort" :min="0"/>
         </ElFormItem>
       </ElForm>
 
@@ -288,4 +321,10 @@ onMounted(fetchCategory);
   width: 100%;
   margin-top: 10px;
 }
+.pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 </style>

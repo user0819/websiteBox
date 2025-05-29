@@ -1,5 +1,7 @@
 package com.tool.box.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tool.box.mapper.WebsiteDetailMapper;
 import com.tool.box.model.WebsiteDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +45,11 @@ public class WebsiteDetailService {
 
     public List<WebsiteDetail> findByQueryParam(Integer categoryId, String name, String url) {
         return websiteDetailMapper.findByQueryParam(categoryId, name, url);
+    }
+
+    public PageInfo<WebsiteDetail> findByQueryParamWithPage(Integer categoryId, String name, String url, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<WebsiteDetail> list = websiteDetailMapper.findByQueryParam(categoryId, name, url);
+        return new PageInfo<>(list);
     }
 }

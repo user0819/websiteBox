@@ -9,7 +9,13 @@ interface WebsiteInfo {
   sort: number;
 }
 
+interface WebsiteInfoPage {
+  total: number;
+  list: WebsiteInfo[];
+}
+
 export type { WebsiteInfo };
+export type { WebsiteInfoPage };
 
 /**
  * 新增
@@ -42,7 +48,7 @@ export async function getWebsiteApi(
     url?: string;
   } = {},
 ) {
-  return requestClient.get<WebsiteInfo[]>('/website', {
+  return requestClient.get<WebsiteInfoPage>('/website', {
     params: query,
   });
 }

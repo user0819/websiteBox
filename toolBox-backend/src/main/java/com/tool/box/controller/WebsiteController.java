@@ -1,5 +1,6 @@
 package com.tool.box.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.tool.box.dto.HttpResponse;
 import com.tool.box.model.WebsiteDetail;
 import com.tool.box.service.WebsiteDetailService;
@@ -16,11 +17,15 @@ public class WebsiteController {
 
 
     @GetMapping
-    public HttpResponse<List<WebsiteDetail>> query(@RequestParam(required = false) Integer categoryId,
-                                                   @RequestParam(required = false) String name,
-                                                   @RequestParam(required = false) String url) {
-        return HttpResponse.success(websiteDetailService.findByQueryParam(categoryId,  name, url));
+    public HttpResponse<PageInfo<WebsiteDetail>> query(@RequestParam(required = false) Integer categoryId,
+                                                       @RequestParam(required = false) String name,
+                                                       @RequestParam(required = false) String url,
+                                                       @RequestParam(defaultValue = "1") int pageNum,
+                                                       @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<WebsiteDetail> pageInfo = websiteDetailService.findByQueryParamWithPage(categoryId, name, url, pageNum, pageSize);
+        return HttpResponse.success(pageInfo);
     }
+
 
     @PostMapping
     public HttpResponse<Boolean> add(@RequestBody WebsiteDetail websiteDetail) {
