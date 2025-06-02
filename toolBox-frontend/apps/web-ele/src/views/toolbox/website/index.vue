@@ -40,7 +40,7 @@ import { useWebsiteList } from './composables/useWebsiteList';
 import { useWebsiteForm } from './composables/useWebsiteForm';
 
 // 列表逻辑
-const { tableData, categoryData, total, query, fetchWebsite,fetchCategory, handleSizeChange, handleCurrentChange } =
+const { tableData, categoryData, total, query, fetchWebsite,fetchCategory} =
   useWebsiteList();
 
 // 表单逻辑
@@ -57,6 +57,17 @@ const resetSearch = () => {
   query.name = '';
   query.url = '';
   fetchWebsite();
+};
+
+
+const handleSizeChange = async (newSize: number) => {
+  query.pageSize = newSize;
+  await fetchWebsite();
+};
+
+const handleCurrentChange = async (newPage: number) => {
+  query.pageNum = newPage;
+  await fetchWebsite();
 };
 
 onMounted(fetchWebsite);

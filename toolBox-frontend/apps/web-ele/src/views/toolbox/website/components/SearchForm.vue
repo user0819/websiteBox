@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import {ElButton, ElCard, ElForm, ElFormItem, ElInput, ElOption, ElSelect,} from 'element-plus';
 
-import type {CategoryInfo} from '#/api';
+import type {CategoryInfo} from '#/views/toolbox/category/types/category';
 
 const {query, categoryData} = defineProps<{
   query: {

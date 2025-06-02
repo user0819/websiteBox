@@ -1,5 +1,11 @@
 <script lang="ts" setup>
-import type { CategoryInfo } from '#/api';
+import type { CategoryInfo } from './types/category';
+import {
+  addCategoryApi,
+  deleteCategoryApi,
+  getCategoryApi,
+  updateCategoryApi,
+} from './services/categoryService';
 
 import { onMounted, reactive, ref } from 'vue';
 
@@ -18,12 +24,6 @@ import {
   ElTable,
 } from 'element-plus';
 
-import {
-  addCategoryApi,
-  deleteCategoryApi,
-  getCategoryApi,
-  updateCategoryApi,
-} from '#/api';
 
 const tableData = ref<CategoryInfo[]>([]);
 const dialogVisible = ref(false);

@@ -1,13 +1,6 @@
-import { requestClient } from '#/api/request';
+import type {CategoryInfo} from '../types/category';
+import {requestClient} from "#/api/request";
 
-interface CategoryInfo {
-  id?: number;
-  name: string;
-  description: string;
-  sort: number;
-}
-
-export type { CategoryInfo };
 
 /**
  * 新增

@@ -49,7 +49,7 @@ import {
   ElButton,
 } from 'element-plus';
 
-import type { WebsiteInfo } from '#/api';
+import type { WebsiteInfo } from '../types/website';
 
 
 const { dialogVisible, isEdit, currentItem, categoryData }  = defineProps<{

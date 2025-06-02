@@ -15,8 +15,14 @@ export const useWebsiteList = () => {
 
   const fetchWebsite = async () => {
     const res = await websiteService.getWebsite(query);
-    tableData.value = res.list;
+    console.log('res.list:', res.list); // 看看是不是有效数组
+    console.log('before update', tableData.value);
+
+    tableData.value = [...res.list]; // 强制替换数组以保证响应性
     total.value = res.total;
+
+    console.log('after update', tableData.value);
+
   };
 
   const fetchCategory = async () => {
@@ -24,16 +30,6 @@ export const useWebsiteList = () => {
     if (Array.isArray(res)) {
       categoryData.value = res;
     }
-  };
-
-  const handleSizeChange = async (newSize: number) => {
-    query.pageSize = newSize;
-    await fetchWebsite();
-  };
-
-  const handleCurrentChange = async (newPage: number) => {
-    query.pageNum = newPage;
-    await fetchWebsite();
   };
 
 
@@ -44,7 +40,5 @@ export const useWebsiteList = () => {
     query,
     fetchWebsite,
     fetchCategory,
-    handleSizeChange,
-    handleCurrentChange,
   };
 };

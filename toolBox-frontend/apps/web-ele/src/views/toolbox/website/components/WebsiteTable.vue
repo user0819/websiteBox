@@ -11,8 +11,8 @@
       <ElTable :data="tableData" stripe border highlight-current-row>
         <ElTable.TableColumn type="index" width="50" />
         <ElTable.TableColumn label="目录" prop="categoryId">
-          <template #default="scope">
-            {{ getCategoryName(scope.row.categoryId) }}
+          <template v-slot="{ row }">
+            {{ getCategoryName(row.categoryId) }}
           </template>
         </ElTable.TableColumn>
         <ElTable.TableColumn label="名称" prop="name" />
@@ -20,9 +20,9 @@
         <ElTable.TableColumn label="描述" prop="description" />
         <ElTable.TableColumn label="序号" prop="sort" />
         <ElTable.TableColumn fixed="right" width="250" label="操作">
-          <template #default="scope">
-            <ElButton type="primary" size="small" @click="$emit('edit', scope.row)">编辑</ElButton>
-            <ElButton type="danger" size="small" @click="$emit('delete', scope.row.id)">删除</ElButton>
+          <template v-slot="{ row }">
+            <ElButton type="primary" size="small" @click="$emit('edit', row)">编辑</ElButton>
+            <ElButton type="danger" size="small" @click="$emit('delete', row.id)">删除</ElButton>
           </template>
         </ElTable.TableColumn>
       </ElTable>
@@ -36,8 +36,8 @@
           :total="total"
           :page-sizes="[10, 20, 50, 100]"
           layout="prev, pager, next, sizes, total, jumper"
-          @current-change="$emit('current-change')"
-          @size-change="$emit('size-change')"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
         />
       </div>
     </template>
@@ -52,7 +52,12 @@ import {
   ElPagination,
 } from 'element-plus';
 
-import type { WebsiteInfo } from '#/api';
+import type { WebsiteInfo } from '../types/website';
+import { useWebsiteList } from '../composables/useWebsiteList';
+
+const {
+  query,
+} = useWebsiteList();
 
 const props = defineProps<{
   tableData: WebsiteInfo[];
@@ -71,6 +76,14 @@ const emit = defineEmits([
   'current-change',
   'size-change',
 ]);
+
+const handleSizeChange = (newSize: number) => {
+  emit('size-change', newSize);
+}
+
+const handleCurrentChange = async (newPage: number) => {
+  emit('current-change', newPage);
+};
 
 const getCategoryName = (categoryId?: number): string => {
   const category = props.categoryData.find((item) => item.id === categoryId);
