@@ -10,14 +10,18 @@
     <template #default>
       <ElTable :data="tableData" stripe border highlight-current-row>
         <ElTable.TableColumn type="index" width="50" />
-        <ElTable.TableColumn label="目录" prop="categoryId">
+        <ElTable.TableColumn label="目录" prop="categoryId" >
           <template v-slot="{ row }">
             {{ getCategoryName(row.categoryId) }}
           </template>
         </ElTable.TableColumn>
-        <ElTable.TableColumn label="名称" prop="name" />
-        <ElTable.TableColumn label="链接" prop="url" />
-        <ElTable.TableColumn label="描述" prop="description" />
+        <ElTable.TableColumn label="名称" prop="name" :show-overflow-tooltip="true"/>
+        <ElTable.TableColumn label="链接" :show-overflow-tooltip="true">
+          <template v-slot="{ row }">
+            <a :href="row.url" target="_blank" rel="noopener noreferrer">{{ row.url }}</a>
+          </template>
+        </ElTable.TableColumn>
+        <ElTable.TableColumn label="描述" prop="description" :show-overflow-tooltip="true"/>
         <ElTable.TableColumn label="序号" prop="sort" />
         <ElTable.TableColumn fixed="right" width="250" label="操作">
           <template v-slot="{ row }">
@@ -92,6 +96,7 @@ const getCategoryName = (categoryId?: number): string => {
 </script>
 
 <style scoped>
+
 .card-header-wrapper {
   display: flex;
   align-items: center;
