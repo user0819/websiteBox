@@ -15,14 +15,8 @@ export const useWebsiteList = () => {
 
   const fetchWebsite = async () => {
     const res = await websiteService.getWebsite(query);
-    console.log('res.list:', res.list); // 看看是不是有效数组
-    console.log('before update', tableData.value);
-
     tableData.value = [...res.list]; // 强制替换数组以保证响应性
     total.value = res.total;
-
-    console.log('after update', tableData.value);
-
   };
 
   const fetchCategory = async () => {

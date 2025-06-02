@@ -28,4 +28,8 @@ export const overridesPreferences = defineOverridesPreferences({
     sidebarToggle: false,
     themeToggle: false,
   },
+  logo: {
+     enable: true,
+     source: 'favicon.svg'
+  }
 });
