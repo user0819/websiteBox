@@ -27,7 +27,7 @@ export async function addWebsiteApi(data: WebsiteInfo) {
 /**
  * 删除
  */
-export async function deleteWebsiteApi(id: number) {
+export async function deleteWebsiteApi(id: number | undefined) {
   return requestClient.delete<WebsiteInfo>(`/website/${id}`);
 }
 
