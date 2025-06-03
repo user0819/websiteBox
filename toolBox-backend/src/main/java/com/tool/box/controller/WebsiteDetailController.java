@@ -15,8 +15,8 @@ public class WebsiteDetailController {
     private WebsiteDetailService websiteDetailService;
 
     @GetMapping("/category/{categoryId}")
-    public List<WebsiteDetail> getDetailsByCategoryId(@PathVariable Integer categoryId) {
-        return websiteDetailService.findByCategoryId(categoryId);
+    public HttpResponse<List<WebsiteDetail>> getDetailsByCategoryId(@PathVariable Integer categoryId) {
+        return HttpResponse.success(websiteDetailService.findByCategoryId(categoryId));
     }
 
     @PutMapping("/{id}")

@@ -1,36 +1,35 @@
 import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
+  {
+    name: 'ToolBox',
+    path: '/toolbox',
+    component: () => import('#/views/toolbox/box/index.vue'),
+    meta: {
+      icon: 'lucide:box',
+      title: 'ToolBox',
+      order: 0,
+    },
+  },
 
   {
-    name: 'category',
+    name: 'Category',
     path: '/category',
     component: () => import('#/views/toolbox/category/index.vue'),
     meta: {
       icon: 'lucide:layers',
-      title: 'category',
+      title: 'Category',
       order: 1,
     },
   },
   {
-    name: 'website',
+    name: 'Website',
     path: '/website',
     component: () => import('#/views/toolbox/website/index.vue'),
     meta: {
       icon: 'lucide:link',
-      title: 'website',
+      title: 'Website',
       order: 2,
-    },
-  },
-
-  {
-    name: 'ToolBox1',
-    path: '/toolbox',
-    component: () => import('#/views/toolbox/toolbox/index.vue'),
-    meta: {
-      icon: 'lucide:book-open',
-      title: 'ToolBox',
-      order: 3,
     },
   },
 

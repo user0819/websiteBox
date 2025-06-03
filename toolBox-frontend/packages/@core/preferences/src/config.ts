@@ -11,7 +11,7 @@ const defaultPreferences: Preferences = {
     contentCompact: 'wide',
     defaultAvatar:
       'https://unpkg.com/@vbenjs/static-source@0.1.7/source/avatar-v1.webp',
-    defaultHomePath: '/analytics',
+    defaultHomePath: '/ToolBox',
     dynamicTitle: true,
     enableCheckUpdates: true,
     enablePreferences: true,
@@ -20,7 +20,7 @@ const defaultPreferences: Preferences = {
     layout: 'sidebar-nav',
     locale: 'zh-CN',
     loginExpiredMode: 'page',
-    name: 'Vben Admin',
+    name: 'ToolBox',
     preferencesButtonPosition: 'auto',
     watermark: false,
   },
@@ -32,9 +32,9 @@ const defaultPreferences: Preferences = {
     styleType: 'normal',
   },
   copyright: {
-    companyName: 'Vben',
-    companySiteLink: 'https://www.vben.pro',
-    date: '2024',
+    companyName: 'ToolBox',
+    companySiteLink: '',
+    date: '2025',
     enable: true,
     icp: '',
     icpLink: '',
@@ -52,7 +52,7 @@ const defaultPreferences: Preferences = {
   },
   logo: {
     enable: true,
-    source: 'https://unpkg.com/@vbenjs/static-source@0.1.7/source/logo-v1.webp',
+    source: 'https://www.baidu.com',
   },
   navigation: {
     accordion: true,
