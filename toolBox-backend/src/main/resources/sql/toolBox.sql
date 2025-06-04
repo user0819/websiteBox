@@ -1,6 +1,14 @@
 create database toolBox ;
 use toolBox;
 
+drop table if exists user;
+CREATE TABLE user (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  password VARCHAR(255)  NOT NULL
+);
+insert into user values (1, 'admin', '123456');
+
 drop table if exists website_category;
 CREATE TABLE website_category (
     id INT AUTO_INCREMENT PRIMARY KEY,

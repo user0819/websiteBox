@@ -25,4 +25,8 @@ public class HttpResponse<T> {
     {
         return new HttpResponse<>(0, data, "success");
     }
+
+    public static HttpResponse<LoginResult> fail(String message) {
+        return new HttpResponse<>(-1, null, message);
+    }
 }
