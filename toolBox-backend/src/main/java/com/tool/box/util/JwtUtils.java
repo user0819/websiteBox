@@ -3,10 +3,12 @@ package com.tool.box.util;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 public class JwtUtils {
 
     private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
@@ -26,5 +28,16 @@ public class JwtUtils {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public static boolean validateToken(String token) {
+        try {
+            String s = parseToken(token);
+            System.out.println(s);
+            return true;
+        } catch (Exception e) {
+            log.error("Token验证失败：{}", e.getMessage());
+            return false;
+        }
     }
 }

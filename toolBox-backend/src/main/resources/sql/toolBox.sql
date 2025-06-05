@@ -8,6 +8,7 @@ CREATE TABLE user (
   password VARCHAR(255)  NOT NULL
 );
 insert into user values (1, 'admin', '123456');
+insert into user values (2, 'xiang', 'xiang');
 
 drop table if exists website_category;
 CREATE TABLE website_category (

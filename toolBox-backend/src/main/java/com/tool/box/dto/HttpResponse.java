@@ -26,7 +26,11 @@ public class HttpResponse<T> {
         return new HttpResponse<>(0, data, "success");
     }
 
-    public static HttpResponse<LoginResult> fail(String message) {
+    public static <T> HttpResponse<T> fail(String message) {
         return new HttpResponse<>(-1, null, message);
+    }
+
+    public static <T> HttpResponse<T> fail(int code, String message) {
+        return new HttpResponse<>(code, null, message);
     }
 }
