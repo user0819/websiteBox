@@ -65,13 +65,15 @@ function openWebsite(url: string) {
 
 .website-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
+  padding: 0 0 20px 0;
 }
 
 .website-card {
   border-radius: 10px;
   padding: 16px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.05);
   border: 1px solid #dce5ef;
   text-align: center; /* 添加文本居中 */
 }
@@ -84,6 +86,9 @@ function openWebsite(url: string) {
 .website-card h3 {
   font-size: 1.1rem;
   margin-bottom: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .website-card a {
@@ -91,11 +96,15 @@ function openWebsite(url: string) {
   font-size: 0.85rem;
   display: block;
   margin-bottom: 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .website-card p {
   font-size: 0.85rem;
   line-height: 1.4;
+
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
